@@ -18,9 +18,21 @@ class MyApp extends ConsumerWidget {
     // Watch the userPreferencesProvider to get the current theme preference
     final isDarkMode = ref.watch(userPreferencesProvider);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Task Manager',
       theme: isDarkMode.isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: HomeScreen(),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   primaryColor: AppColors.mainColor,
+      //   appBarTheme: AppBarTheme(
+      //     backgroundColor: AppColors.mainColor, // AppBar color
+      //     foregroundColor: AppColors.mainWhiteColor, // Text & icon color
+      //     elevation: 2, // Shadow effect
+      //
+      //   ),
+      //   useMaterial3: true,
+      // ),
     );
   }
 }
