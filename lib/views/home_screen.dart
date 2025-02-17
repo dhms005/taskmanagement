@@ -4,6 +4,7 @@ import 'package:taskmanagement/viewmodels/user_preferences_provider.dart';
 import 'package:taskmanagement/views/add_task_screen.dart';
 import 'package:taskmanagement/views/edit_task_screen.dart';
 import 'package:taskmanagement/views/settings_screen.dart';
+import 'package:taskmanagement/widgets/task_list.dart';
 
 import '../models/task_model.dart';
 import '../viewmodels/task_provider.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends ConsumerWidget {
     final tasks = ref.watch(taskProvider);
     final userPreferences = ref.watch(userPreferencesProvider);
     // Sort tasks based on the selected sort order
-    List tasksToDisplay = [...tasks];
+    List<Task> tasksToDisplay = [...tasks];
     if (userPreferences.sortOrder == 'byDate') {
       tasksToDisplay.sort((a, b) => a.date.compareTo(b.date));
     } else if (userPreferences.sortOrder == 'byPriority') {
@@ -27,20 +28,23 @@ class HomeScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Task Manager'),actions: [
-        IconButton(
-          icon: const Icon(Icons.settings),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
-            );
-          },
-        ),
-      ],),
+      appBar: AppBar(
+        title: Text('Task Manager'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
+        ],
+      ),
       body: screenWidth < 600 // If the screen width is less than 600px (mobile)
-          ? _buildMobileView(tasks, context, ref)
-          : _buildTabletView(tasks, context, ref),
+          ? _buildMobileView(tasksToDisplay, context, ref)
+          : _buildTabletView(tasksToDisplay, context, ref),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -54,87 +58,20 @@ class HomeScreen extends ConsumerWidget {
   }
 
   // Mobile View: A simple list of tasks
-  Widget _buildMobileView(List<Task> tasks, BuildContext context, WidgetRef ref) {
-    return tasks.isEmpty
-        ? Center(child: Text("No tasks available"))
-        : ListView.builder(
-      itemCount: tasks.length,
-      itemBuilder: (context, index) {
-        final task = tasks[index];
-        return ListTile(
-          title: Text(task.title),
-          subtitle: Text(task.description),
-          trailing: Checkbox(
-            value: task.isCompleted,
-            onChanged: (value) {
-              ref.read(taskProvider.notifier).updateTask(
-                Task(
-                    id: task.id,
-                    title: task.title,
-                    description: task.description,
-                    isCompleted: value!,
-                    date: task.date,
-                    priority: task.priority
-                ),
-              );
-            },
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditTaskScreen(task: task),
-              ),
-            );
-          },
-        );
-      },
-    );
+  Widget _buildMobileView(
+      List<Task> tasks, BuildContext context, WidgetRef ref) {
+    return TaskList(tasks: tasks, context: context, ref: ref);
   }
 
   // Tablet View: Split view with list and details side-by-side
-  Widget _buildTabletView(List<Task> tasks, BuildContext context, WidgetRef ref) {
+  Widget _buildTabletView(
+      List<Task> tasks, BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         // Task List
         Expanded(
           flex: 2,
-          child: tasks.isEmpty
-              ? Center(child: Text("No tasks available"))
-              : ListView.builder(
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              final task = tasks[index];
-              return ListTile(
-                title: Text(task.title),
-                subtitle: Text(task.description),
-                trailing: Checkbox(
-                  value: task.isCompleted,
-                  onChanged: (value) {
-                    ref.read(taskProvider.notifier).updateTask(
-                      Task(
-                          id: task.id,
-                          title: task.title,
-                          description: task.description,
-                          isCompleted: value!,
-                          date: task.date,
-                          priority: task.priority
-                      ),
-                    );
-                  },
-                ),
-                onTap: () {
-                  // If a task is clicked on tablet, show details on the right
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditTaskScreen(task: task),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+          child: TaskList(tasks: tasks, context: context, ref: ref),
         ),
         // Divider between the task list and task details
         VerticalDivider(width: 1),
