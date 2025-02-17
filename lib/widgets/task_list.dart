@@ -9,11 +9,10 @@ class TaskList extends StatelessWidget {
   BuildContext context;
   WidgetRef ref;
 
-  TaskList(
-      {super.key,
-      required this.tasks,
-      required this.context,
-      required this.ref});
+  TaskList({super.key,
+    required this.tasks,
+    required this.context,
+    required this.ref});
 
   @override
   Widget build(BuildContext context) {
