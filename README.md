@@ -18,3 +18,4 @@ A Flutter-based Task Management App that allows users to create, edit, delete, a
 * Dart SDK (included with Flutter)
 * Android Studio / Visual Studio Code (for running and debugging)
 * Android Emulator or a physical device
+* 
