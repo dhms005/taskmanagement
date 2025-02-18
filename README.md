@@ -31,13 +31,13 @@ A Flutter-based Task Management App that allows users to create, edit, delete, a
    The app uses SQLite for storing tasks. No additional setup is needed as the database is initialized automatically.
 
 ## **Folder Structure**
-`lib/<br>
+lib/<br>
 │── main.dart             # Entry point of the application<br>
 │── models/               # Data models (Task, User Preferences, etc.)<br>
 │── viewmodels/           # Riverpod providers for state management<br>
 │── views/                # Screens and UI components<br>
 │── widgets/              # Reusable UI components<br>
-│── utils/                # Helper classes, constants, and utilities<br>`
+│── utils/                # Helper classes, constants, and utilities<br>
 
 ## **Contributing**
 Feel free to fork this repository, make your changes, and submit a pull request.
