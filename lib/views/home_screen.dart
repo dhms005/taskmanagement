@@ -103,12 +103,6 @@ class HomeScreen extends ConsumerWidget {
                     final task = tasks[index];
                     return GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => EditTaskScreen(task: task),
-                          //   ),
-                          // );
                           selectedTask == task;
                           ref.read(selectedTaskProvider.notifier).selectTask(task);
                         },
