@@ -6,7 +6,9 @@ import 'package:taskmanagement/widgets/textRobotoFont.dart';
 
 /// 📌 UI for Empty Task
 class EmptyTask extends StatelessWidget {
-  const EmptyTask({super.key});
+  final String title;
+
+  const EmptyTask({super.key, this.title = AppStrings.noTasksAvailable});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class EmptyTask extends StatelessWidget {
             width: 250,
           ),
           TextRobotoFont(
-            title: AppStrings.noTasksAvailable,
+            title: title,
             fontWeight: FontWeight.values[5],
             fontSize: 16,
           )

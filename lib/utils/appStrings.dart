@@ -17,7 +17,9 @@ class AppStrings {
   static const String editTask = "Edit Task";
   static const String taskList = "Task List";
   static const String noTasksAvailable = "No tasks available";
+  static const String noTasksFind = "No tasks found matching your search criteria.";
   static const String selectATaskToViewDetails = "Select a task to view details";
+  static const String searchTasks = "Search Tasks";
 
   static DateFormat dateFormatFull = DateFormat('d MMM yyyy, hh:mm a');
   static DateFormat dateFormatOnlyDate = DateFormat('d MMM yyyy');

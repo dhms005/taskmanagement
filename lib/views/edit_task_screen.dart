@@ -147,7 +147,9 @@ class _EditTaskScreenState extends ConsumerState<EditTaskScreen> {
                           await ref
                               .read(taskProvider.notifier)
                               .updateTask(updatedTask);
-                          Navigator.pop(context); // Go back after saving
+                          if (screenWidth < 600) {
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       child: const Text(AppStrings.saveChanges),
