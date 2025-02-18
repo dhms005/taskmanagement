@@ -18,4 +18,28 @@ A Flutter-based Task Management App that allows users to create, edit, delete, a
 * Dart SDK (included with Flutter)
 * Android Studio / Visual Studio Code (for running and debugging)
 * Android Emulator or a physical device
-* 
+
+## **Setup & Installation**
+1. Clone the repository
+   git clone https://github.com/your-username/task-management-app.git
+   cd task-management-app
+2. Install dependencies
+   flutter pub get
+3. Run the application
+   flutter run
+4. Setup Database
+
+## **Folder Structure**
+lib/
+│── main.dart             # Entry point of the application
+│── models/               # Data models (Task, User Preferences, etc.)
+│── viewmodels/           # Riverpod providers for state management
+│── views/                # Screens and UI components
+│── widgets/              # Reusable UI components
+│── utils/                # Helper classes, constants, and utilities
+
+## **Contributing**
+Feel free to fork this repository, make your changes, and submit a pull request.
+
+## **License**
+This project is licensed under the MIT License.
