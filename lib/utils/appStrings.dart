@@ -22,6 +22,7 @@ class AppStrings {
   static const String searchTasks = "Search Tasks";
   static const String taskHasBeenDeleted = "Task Has Been Deleted";
   static const String undo = "Undo";
+  static const String swipeLeftToDelete = "Swipe left to delete";
 
   static DateFormat dateFormatFull = DateFormat('d MMM yyyy, hh:mm a');
   static DateFormat dateFormatOnlyDate = DateFormat('d MMM yyyy');

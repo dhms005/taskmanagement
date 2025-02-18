@@ -117,7 +117,7 @@ class TaskList extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(16),
                   child: TextRobotoFont(
-                    title: "Swipe left to delete",
+                    title: AppStrings.swipeLeftToDelete,
                     fontSize: 15,
                   )),
             ],
@@ -190,7 +190,7 @@ class TaskList extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.all(16),
                         child: TextRobotoFont(
-                          title: "Swipe left to delete",
+                          title: AppStrings.swipeLeftToDelete,
                           fontSize: 14,
                         )),
                   ],
