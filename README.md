@@ -21,13 +21,14 @@ A Flutter-based Task Management App that allows users to create, edit, delete, a
 
 ## **Setup & Installation**
 1. Clone the repository
-   git clone https://github.com/dhms005/taskmanagement.git
-   cd taskmanagement
+   `git clone https://github.com/dhms005/taskmanagement.git`
+   `cd taskmanagement`
 2. Install dependencies
-   flutter pub get
+   `flutter pub get`
 3. Run the application
-   flutter run
+   `flutter run`
 4. Setup Database
+   The app uses SQLite for storing tasks. No additional setup is needed as the database is initialized automatically.
 
 ## **Folder Structure**
 lib/
