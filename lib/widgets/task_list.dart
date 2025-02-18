@@ -112,6 +112,14 @@ class TaskList extends StatelessWidget {
                         },
                       ),
               ),
+              /// Swipe Text
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(16),
+                  child: TextRobotoFont(
+                    title: "Swipe left to delete",
+                    fontSize: 15,
+                  )),
             ],
           );
   }
@@ -176,6 +184,15 @@ class TaskList extends StatelessWidget {
                               },
                             ),
                     ),
+
+                    /// Swipe Text
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.all(16),
+                        child: TextRobotoFont(
+                          title: "Swipe left to delete",
+                          fontSize: 14,
+                        )),
                   ],
                 ),
         ),
@@ -190,7 +207,7 @@ class TaskList extends StatelessWidget {
                     child: TextRobotoFont(
                     title: AppStrings.selectATaskToViewDetails,
                     fontWeight: FontWeight.values[5],
-                    fontSize: 16,
+                    fontSize: 14,
                   ))
                 : EditTaskScreen(
                     key: ValueKey(selectedTask.id), task: selectedTask),
