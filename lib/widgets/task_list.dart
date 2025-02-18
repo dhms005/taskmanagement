@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskmanagement/models/task_model.dart';
+import 'package:taskmanagement/utils/appStrings.dart';
 import 'package:taskmanagement/viewmodels/selected_task_provider.dart';
 import 'package:taskmanagement/views/edit_task_screen.dart';
+import 'package:taskmanagement/widgets/empty_task.dart';
 import 'package:taskmanagement/widgets/task_item.dart';
+import 'package:taskmanagement/widgets/textRobotoFont.dart';
 
 class TaskList extends StatelessWidget {
   List<Task> tasks;
@@ -20,7 +23,6 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // Get screen width to differentiate between mobile and tablet.
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -33,7 +35,7 @@ class TaskList extends StatelessWidget {
   Widget _buildMobileView(List<Task> tasks, BuildContext context, WidgetRef ref,
       Task? selectedTask) {
     return tasks.isEmpty
-        ? Center(child: Text("No tasks available"))
+        ? EmptyTask()
         : ListView.builder(
             itemCount: tasks.length,
             itemBuilder: (context, index) {
@@ -56,14 +58,13 @@ class TaskList extends StatelessWidget {
   // Tablet View: Split view with list and details side-by-side
   Widget _buildTabletView(List<Task> tasks, BuildContext context, WidgetRef ref,
       Task? selectedTask) {
-    print(selectedTask?.title);
     return Row(
       children: [
         // Task List
         Expanded(
           flex: 2,
           child: tasks.isEmpty
-              ? Center(child: Text("No tasks available"))
+              ? EmptyTask()
               : ListView.builder(
                   itemCount: tasks.length,
                   itemBuilder: (context, index) {
@@ -86,7 +87,12 @@ class TaskList extends StatelessWidget {
           flex: 3,
           child: Center(
             child: selectedTask == null
-                ? Center(child: Text("Select a task to view details"))
+                ? Center(
+                    child: TextRobotoFont(
+                    title: AppStrings.selectATaskToViewDetails,
+                    fontWeight: FontWeight.values[5],
+                    fontSize: 16,
+                  ))
                 : EditTaskScreen(
                     key: ValueKey(selectedTask.id), task: selectedTask),
           ),

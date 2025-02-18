@@ -5,7 +5,7 @@ import 'package:taskmanagement/utils/appColors.dart';
 import 'package:taskmanagement/utils/appStrings.dart';
 import 'package:taskmanagement/viewmodels/task_provider.dart';
 import 'package:taskmanagement/viewmodels/user_preferences_provider.dart';
-import 'package:taskmanagement/widgets/textRobotoFont.dart';
+import 'package:taskmanagement/widgets/textRobotoFontColor.dart';
 
 class TaskItem extends StatelessWidget {
   Task task;
@@ -63,7 +63,7 @@ class TaskItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextRobotoFont(
+                        TextRobotoFontColor(
                           title: task.title,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class TaskItem extends StatelessWidget {
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
                         ),
-                        TextRobotoFont(
+                        TextRobotoFontColor(
                           title: task.description,
                           fontColor: Colors.grey,
                           fontSize: 14,
@@ -82,14 +82,14 @@ class TaskItem extends StatelessWidget {
                         SizedBox(height: 8),
                         Row(
                           children: [
-                            TextRobotoFont(
+                            TextRobotoFontColor(
                               title:
                                   "${AppStrings.dateFormatOnlyDate.format(task.date)}",
                               fontColor: Colors.grey,
                               fontSize: 14,
                             ),
                             SizedBox(width: 8),
-                            TextRobotoFont(
+                            TextRobotoFontColor(
                               title:
                                   "${AppStrings.dateFormatOnlyTime.format(task.date)}",
                               fontColor: Colors.grey,
