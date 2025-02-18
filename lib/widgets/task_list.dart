@@ -34,33 +34,6 @@ class TaskList extends StatelessWidget {
                     );
                   },
                   child: TaskItem(task: task, context: context, ref: ref));
-
-              ListTile(
-                title: Text(task.title),
-                subtitle: Text(task.description),
-                trailing: Checkbox(
-                  value: task.isCompleted,
-                  onChanged: (value) {
-                    ref.read(taskProvider.notifier).updateTask(
-                          Task(
-                              id: task.id,
-                              title: task.title,
-                              description: task.description,
-                              isCompleted: value!,
-                              date: task.date,
-                              priority: task.priority),
-                        );
-                  },
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditTaskScreen(task: task),
-                    ),
-                  );
-                },
-              );
             },
           );
   }

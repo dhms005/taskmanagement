@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskmanagement/models/task_model.dart';
+import 'package:taskmanagement/utils/appStrings.dart';
+import 'package:taskmanagement/viewmodels/selected_task_provider.dart';
+import 'package:taskmanagement/viewmodels/task_provider.dart';
 import 'package:taskmanagement/viewmodels/user_preferences_provider.dart';
 import 'package:taskmanagement/views/add_task_screen.dart';
 import 'package:taskmanagement/views/edit_task_screen.dart';
 import 'package:taskmanagement/views/settings_screen.dart';
-import 'package:taskmanagement/widgets/task_list.dart';
-
-import '../models/task_model.dart';
-import '../viewmodels/task_provider.dart';
+import 'package:taskmanagement/widgets/task_item.dart';
 
 class HomeScreen extends ConsumerWidget {
   @override
@@ -18,6 +19,7 @@ class HomeScreen extends ConsumerWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     final tasks = ref.watch(taskProvider);
+    final selectedTask = ref.watch(selectedTaskProvider);
     final userPreferences = ref.watch(userPreferencesProvider);
     // Sort tasks based on the selected sort order
     List<Task> tasksToDisplay = [...tasks];
@@ -27,9 +29,11 @@ class HomeScreen extends ConsumerWidget {
       tasksToDisplay.sort((a, b) => a.priority.compareTo(b.priority));
     }
 
+    print(selectedTask?.title);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task Manager'),
+        title: Text(AppStrings.taskList),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -43,8 +47,8 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       body: screenWidth < 600 // If the screen width is less than 600px (mobile)
-          ? _buildMobileView(tasksToDisplay, context, ref)
-          : _buildTabletView(tasksToDisplay, context, ref),
+          ? _buildMobileView(tasksToDisplay, context, ref, selectedTask)
+          : _buildTabletView(tasksToDisplay, context, ref, selectedTask),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -58,20 +62,60 @@ class HomeScreen extends ConsumerWidget {
   }
 
   // Mobile View: A simple list of tasks
-  Widget _buildMobileView(
-      List<Task> tasks, BuildContext context, WidgetRef ref) {
-    return TaskList(tasks: tasks, context: context, ref: ref);
+  Widget _buildMobileView(List<Task> tasks, BuildContext context, WidgetRef ref,
+      Task? selectedTask) {
+    return tasks.isEmpty
+        ? Center(child: Text("No tasks available"))
+        : ListView.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              final task = tasks[index];
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditTaskScreen(task: task),
+                      ),
+                    );
+                    selectedTask == task;
+                    ref.read(selectedTaskProvider.notifier).selectTask(task);
+                  },
+                  child: TaskItem(task: task, context: context, ref: ref));
+            },
+          );
   }
 
   // Tablet View: Split view with list and details side-by-side
-  Widget _buildTabletView(
-      List<Task> tasks, BuildContext context, WidgetRef ref) {
+  Widget _buildTabletView(List<Task> tasks, BuildContext context, WidgetRef ref,
+      Task? selectedTask) {
+    print(selectedTask?.title);
     return Row(
       children: [
         // Task List
         Expanded(
           flex: 2,
-          child: TaskList(tasks: tasks, context: context, ref: ref),
+          child: tasks.isEmpty
+              ? Center(child: Text("No tasks available"))
+              : ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    final task = tasks[index];
+                    return GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => EditTaskScreen(task: task),
+                          //   ),
+                          // );
+                          selectedTask == task;
+                          ref.read(selectedTaskProvider.notifier).selectTask(task);
+                        },
+                        child:
+                            TaskItem(task: task, context: context, ref: ref));
+                  },
+                ),
         ),
         // Divider between the task list and task details
         VerticalDivider(width: 1),
@@ -79,7 +123,9 @@ class HomeScreen extends ConsumerWidget {
         Expanded(
           flex: 3,
           child: Center(
-            child: Text("Select a task to view details."),
+            child: selectedTask == null
+                ? Center(child: Text("Select a task to view details"))
+                : EditTaskScreen(key: ValueKey(selectedTask.id), task: selectedTask),
           ),
         ),
       ],

@@ -15,6 +15,7 @@ class AppStrings {
   static const String deleteTask = "Delete Task";
   static const String saveChanges = "Save Changes";
   static const String editTask = "Edit Task";
+  static const String taskList = "Task List";
 
 
   static DateFormat dateFormatFull = DateFormat('d MMM yyyy, hh:mm a');

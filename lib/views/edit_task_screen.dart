@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskmanagement/models/task_model.dart';
 import 'package:taskmanagement/utils/appColors.dart';
 import 'package:taskmanagement/utils/appStrings.dart';
+import 'package:taskmanagement/viewmodels/selected_task_provider.dart';
 import 'package:taskmanagement/viewmodels/task_provider.dart';
 import 'package:taskmanagement/widgets/priority_selection_field.dart';
-
 
 class EditTaskScreen extends ConsumerStatefulWidget {
   final Task task;
@@ -43,6 +43,9 @@ class _EditTaskScreenState extends ConsumerState<EditTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen width to differentiate between mobile and tablet.
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.editTask)),
       body: Padding(
@@ -137,8 +140,8 @@ class _EditTaskScreenState extends ConsumerState<EditTaskScreen> {
                             title: _titleController.text,
                             description: _descriptionController.text,
                             date: _selectedDate,
-                            priority:
-                            AppStrings.getPriorityValue(_priorityController.text),
+                            priority: AppStrings.getPriorityValue(
+                                _priorityController.text),
                           );
 
                           await ref
@@ -150,22 +153,27 @@ class _EditTaskScreenState extends ConsumerState<EditTaskScreen> {
                       child: const Text(AppStrings.saveChanges),
                     ),
                   ),
-
                   const SizedBox(width: 20),
-
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
-                        ref.read(taskProvider.notifier).deleteTask(widget.task.id!);
-                        Navigator.pop(context); // Go back after deletion
+                        ref
+                            .read(taskProvider.notifier)
+                            .deleteTask(widget.task.id!);
+                        ref
+                            .read(selectedTaskProvider.notifier)
+                            .clearSelection();
+                        // Navigator.pop(context); // Go back after deletion
+
+                        if (screenWidth < 600) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: const Text(AppStrings.deleteTask),
                     ),
                   ),
                 ],
               ),
-
-
             ],
           ),
         ),
