@@ -1,16 +1,20 @@
 # taskmanagement
 
-A new Flutter project.
+# **Task Management App**
 
-## Getting Started
+A Flutter-based Task Management App that allows users to create, edit, delete, and manage tasks efficiently. The app supports notifications, state management with Riverpod and user preferences with Hive.
 
-This project is a starting point for a Flutter application.
+## **Features**
+* Add, edit, delete, and view tasks 
+* Mark tasks as "Completed" or "Pending"
+* Persist tasks using SQLite 
+* Store user preferences (theme, sort order) using Hive 
+* Responsive UI (Mobile & Tablet support)
+* State management using Riverpod
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## **Requirements**
+* Ensure you have the following installed before running the project:
+* Flutter SDK 
+* Dart SDK (included with Flutter)
+* Android Studio / Visual Studio Code (for running and debugging)
+* Android Emulator or a physical device
