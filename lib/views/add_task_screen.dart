@@ -27,112 +27,115 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
       appBar: AppBar(
         title: const Text(AppStrings.addTask),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: AppStrings.title,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5), // Rounded corners
-                    borderSide: const BorderSide(
-                        color: AppColors.editTextBorderColor, width: 1),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    labelText: AppStrings.title,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5), // Rounded corners
+                      borderSide: const BorderSide(
+                          color: AppColors.editTextBorderColor, width: 1),
+                    ),
+                  ),
+                  validator: (value) =>
+                  value!.isEmpty ? AppStrings.pleaseEnterTaskTitle : null,
+                ),
+                SizedBox(height: 30),
+                TextFormField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                    labelText: AppStrings.description,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5), // Rounded corners
+                      borderSide: const BorderSide(
+                          color: AppColors.editTextBorderColor, width: 1),
+                    ),
                   ),
                 ),
-                validator: (value) =>
-                value!.isEmpty ? AppStrings.pleaseEnterTaskTitle : null,
-              ),
-              SizedBox(height: 30),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                  labelText: AppStrings.description,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5), // Rounded corners
-                    borderSide: const BorderSide(
-                        color: AppColors.editTextBorderColor, width: 1),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              GestureDetector(
-                onTap: _pickDate,
-                child: AbsorbPointer(
-                  child: TextField(
-                    controller: _dateController,
-                    decoration: InputDecoration(
-                      labelText: AppStrings.dueDate,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        // Rounded corners
-                        borderSide: const BorderSide(
-                            color: AppColors.editTextBorderColor, width: 1),
-                      ),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(9), // Adjust padding if needed
-                        child: Icon(
-                          Icons.calendar_today,
+                SizedBox(height: 30),
+                GestureDetector(
+                  onTap: _pickDate,
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: _dateController,
+                      decoration: InputDecoration(
+                        labelText: AppStrings.dueDate,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          // Rounded corners
+                          borderSide: const BorderSide(
+                              color: AppColors.editTextBorderColor, width: 1),
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(9), // Adjust padding if needed
+                          child: Icon(
+                            Icons.calendar_today,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 30),
-              GestureDetector(
-                onTap: _pickTime,
-                child: AbsorbPointer(
-                  child: TextField(
-                    controller: _timeController,
-                    decoration: InputDecoration(
-                      labelText: AppStrings.dueTime,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        // Rounded corners
-                        borderSide: const BorderSide(
-                            color: AppColors.editTextBorderColor, width: 1),
-                      ),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(9), // Adjust padding if needed
-                        child: Icon(
-                          Icons.access_time,
+                SizedBox(height: 30),
+                GestureDetector(
+                  onTap: _pickTime,
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: _timeController,
+                      decoration: InputDecoration(
+                        labelText: AppStrings.dueTime,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          // Rounded corners
+                          borderSide: const BorderSide(
+                              color: AppColors.editTextBorderColor, width: 1),
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(9), // Adjust padding if needed
+                          child: Icon(
+                            Icons.access_time,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 30),
-              PrioritySelectionField(controller: _priorityController),
-              SizedBox(height: 30),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          final newTask = Task(
-                            title: _titleController.text,
-                            description: _descriptionController.text,
-                            date: _selectedDate, // Store both date and time
-                            priority:
-                                AppStrings.getPriorityValue(_priorityController.text),
-                          );
-
-                          ref.read(taskProvider.notifier).addTask(newTask);
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: const Text(AppStrings.saveTask),
+                SizedBox(height: 30),
+                PrioritySelectionField(controller: _priorityController),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            final newTask = Task(
+                              title: _titleController.text,
+                              description: _descriptionController.text,
+                              date: _selectedDate, // Store both date and time
+                              priority:
+                                  AppStrings.getPriorityValue(_priorityController.text),
+                            );
+        
+                            ref.read(taskProvider.notifier).addTask(newTask);
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: const Text(AppStrings.saveTask),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
