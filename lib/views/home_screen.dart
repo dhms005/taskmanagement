@@ -25,8 +25,6 @@ class HomeScreen extends ConsumerWidget {
       tasksToDisplay.sort((a, b) => a.priority.compareTo(b.priority));
     }
 
-    print(selectedTask?.title);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.taskList),
